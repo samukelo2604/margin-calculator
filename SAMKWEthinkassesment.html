@@ -1,72 +1,45 @@
-    <div class="form-group">
-        <label for="costPrice">Cost Price (zar)</label>
-        <input type="number" id="costPrice" placeholder="Enter cost price" step="0.01" min="0">
-    </div>
-    
-    <div class="form-group">
-        <label for="sellingPrice">Selling Price (zar)</label>
-        <input type="number" id="sellingPrice" placeholder="Enter selling price" step="0.01" min="0">
-    </div>
-    
-    <button onclick="calculateMargin()">Calculate Margin</button>
-    
-    <div class="error" id="error"></div>
-    
-    <div class="result" id="result">
-        <div class="result-item">
-            <div class="result-label">Profit Amount:</div>
-            <div class="result-value">R<span id="profitValue">0</span></div>
-        </div>
-        <div class="result-item">
-            <div class="result-label">Margin Percentage:</div>
-            <div class="result-value"><span id="marginValue">0</span>%</div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function calculateMargin() {
-        const costPrice = parseFloat(document.getElementById('costPrice').value);
-        const sellingPrice = parseFloat(document.getElementById('sellingPrice').value);
-        const errorDiv = document.getElementById('error');
-        const resultDiv = document.getElementById('result');
-        
-        errorDiv.classList.remove('show');
-        resultDiv.classList.remove('show');
-        
-        // Validation
-        if (!costPrice || !sellingPrice) {
-            errorDiv.textContent = 'Please enter both values';
-            errorDiv.classList.add('show');
-            return;
-        }
-        
-        if (costPrice <= 0 || sellingPrice <= 0) {
-            errorDiv.textContent = 'Prices must be positive numbers';
-            errorDiv.classList.add('show');
-            return;
-        }
-        
-        if (sellingPrice < costPrice) {
-            errorDiv.textContent = 'Selling price cannot be less than cost price';
-            errorDiv.classList.add('show');
-            return;
-        }
-        
-        // Calculate
-        const profit = (sellingPrice - costPrice).toFixed(2);
-        const margin = ((profit / costPrice) * 100).toFixed(2);
-        
-        // Display results
-        document.getElementById('profitValue').textContent = profit;
-        document.getElementById('marginValue').textContent = margin;
-        resultDiv.classList.add('show');
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
     }
-    
-    // Allow Enter key to calculate
-    document.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            calculateMargin();
-        }
-    });
-</script>
+    .container {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+    }
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    .result {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #e9ecef;
+        border-radius: 6px;
+    }
+</style>   
+   
+   
