@@ -1,45 +1,131 @@
-<style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f0f2f5;
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-    }
-    .container {
-        background: white;
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        width: 100%;
-        max-width: 400px;
-    }
-    input {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-    }
-    button {
-        width: 100%;
-        padding: 12px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: #0056b3;
-    }
-    .result {
-        margin-top: 20px;
-        padding: 15px;
-        background-color: #e9ecef;
-        border-radius: 6px;
-    }
-</style>   
-   
-   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Margin Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            color: #555;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 0 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 6px;
+            text-align: center;
+            display: none;
+        }
+        .result.show {
+            display: block;
+        }
+        .result-label {
+            color: #666;
+            font-size: 14px;
+        }
+        .result-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #007bff;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Margin Calculator</h1>
+        
+        <label for="costPrice">Cost Price ($):</label>
+        <input type="number" id="costPrice" placeholder="Enter cost price" step="0.01" min="0">
+        
+        <label for="sellingPrice">Selling Price ($):</label>
+        <input type="number" id="sellingPrice" placeholder="Enter selling price" step="0.01" min="0">
+        
+        <button onclick="calculateMargin()">Calculate Margin</button>
+        
+        <div class="result" id="result">
+            <div class="result-label">Profit Margin</div>
+            <div class="result-value" id="marginValue">0%</div>
+        </div>
+    </div>
+
+    <script>
+        function calculateMargin() {
+            const costPrice = parseFloat(document.getElementById('costPrice').value);
+            const sellingPrice = parseFloat(document.getElementById('sellingPrice').value);
+            const resultDiv = document.getElementById('result');
+            
+            if (isNaN(costPrice) || isNaN(sellingPrice) || costPrice < 0 || sellingPrice < 0) {
+                alert('Please enter valid positive numbers');
+                return;
+            }
+            
+            if (costPrice === 0) {
+                alert('Cost price cannot be zero');
+                return;
+            }
+            
+            const margin = ((sellingPrice - costPrice) / costPrice) * 100;
+            document.getElementById('marginValue').textContent = margin.toFixed(2) + '%';
+            resultDiv.classList.add('show');
+        }
+        
+        document.getElementById('costPrice').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculateMargin();
+        });
+        document.getElementById('sellingPrice').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculateMargin();
+        });
+    </script>
+</body>
+</html>
